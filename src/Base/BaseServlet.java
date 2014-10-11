@@ -60,22 +60,26 @@ public class BaseServlet extends HttpServlet {
 		
 
 	    try {
-	    	/*
-	    	// WOrking Part
-	    	Class<?> clazz = Class.forName("Controller."+ controllerName);           
-	    	Object obj = clazz.newInstance();	    	
-	    	Method method = clazz.getMethod(uri_segment[0]);
-	    	String returnValue = (String) method.invoke(obj, null);		    	    	
-	    	request.getRequestDispatcher("/WEB-INF/"+ returnValue + ".jsp").include(request, response);
-	    	// End of WOrking Part
-	    	*/
+	   
 	    	Class<?> clazz = Class.forName("Controller."+ ControllerName);           
-	    	Object obj = clazz.newInstance();	    	
+	    	Object obj = clazz.newInstance();	
+	    	
+	    	/*Class[] paramString = new Class[1];	
+	    	paramString[0] = String.class;
+	    	Method methodURI = clazz.getMethod("set_uri", new Class[]{String[].class});
+	    	*/	    	
+	    
+	    	Method methodToExecute = clazz.getMethod("set_uri", new Class[]{String[].class});
+	    	methodToExecute.invoke(obj, new Object[]{uri_segment});
+	    
+	    	
+	    	
 	    	Method Targetmethod = clazz.getMethod(ControllerMethodName);
-	    	Targetmethod.invoke(obj, null);
-	    		    	
+	    	Targetmethod.invoke(obj);    	   
+	    	
+	    	
 	    	Method methodGetViewFile = clazz.getMethod("getView");
-	    	String ViewFile = (String) methodGetViewFile.invoke(obj, null);
+	    	String ViewFile = (String) methodGetViewFile.invoke(obj);
 	    	
 	    	
 	    	Method ValuesSetByUsers = clazz.getMethod("getValue");
@@ -87,18 +91,13 @@ public class BaseServlet extends HttpServlet {
 	    		request.setAttribute( s , data.get( data.keySet().toArray()[i] ));	    		
 	    	}
 	       	request.getRequestDispatcher("/WEB-INF/"+ ViewFile + ".jsp").include(request, response);
-	    	
-	    	
-	    	/*Class<?> clazz = Class.forName("Controller."+ controllerName);           
-	    	Object obj = clazz.newInstance();	    	    	
-	    	Class[] paramTypes = new Class[1];	    	
-	    	paramTypes[0]=String.class;
-	    	Method method = clazz.getDeclaredMethod(uri_segment[0],paramTypes);
-	    	String returnValue = (String) method.invoke(obj, "sr");	    	 
-	    	out.println(returnValue);*/
+	
 	    	 
 	    } catch (Exception e) {
 	    	e.printStackTrace();
+	    	out.println(e.getMessage());
+	    	out.println(e.toString());
+	    	
 	    }
 		
 		

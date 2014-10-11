@@ -9,7 +9,7 @@ import Base.BaseController;
 
 public class HomeController extends BaseController  {
 	
-
+	
 	public void index()
 	{	
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -18,12 +18,13 @@ public class HomeController extends BaseController  {
 		myString.add("This is my First String");
 		myString.add("This is my Second String");		
 		map.put("view", "Home");
-		map.put("fruit", "mango");
+		map.put("fruit", get_uri()[0]);
 		map.put("myArray", myString);	
 		setValue(map);
 		LoadView("home");
 		
 	}
+
 	
 	
 }

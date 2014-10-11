@@ -8,7 +8,7 @@
 </head>
 <body>
 <%=(String)request.getAttribute("view")%>
-
+<%=(String)request.getAttribute("fruit")%>
 <br>
 
  <c:forEach items="${myArray}" var="food">
